@@ -1,0 +1,45 @@
+create table products(
+	id serial primary key,
+	name varchar(50),
+	nounce varchar(20)
+);
+
+create table clients(
+	id serial primary key,
+	name varchar(50),
+	adress varchar(100),
+	phone int
+);
+
+create table futura(
+	id serial primary key,
+	data date,
+	id_client int references clients(id),
+	totalsum real
+);
+
+create table futurainfo(
+	id serial primary key,
+	id_futura int references futura(id),
+	id_products int references products(id),
+	quantity real,
+	price real
+);
+
+create function ins_futurainfo returns trigger
+	begin 
+		if new.id_futura is null then
+			raise exception 'id_futura cannot be null';
+		end if;
+		if new.id_products is null then
+			raise exception 'id_products cannot be null';
+		end if;
+		update futura
+			set totalsum = (select totalsum from futura where new.id_futura = id_futura)
+			+ new.price * new.quantity
+			where id_futura = new.id_futura
+	end;
+trigger language plpgsql;
+
+create trigger ins_futurainfo before insert on futurainfo
+	for each row execute procedure ins_futurainfo();

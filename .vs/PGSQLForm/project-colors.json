@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "e9a874a2-4079-4e36-a941-1d0c68b151fd": {
+      "ProjectGuid": "e9a874a2-4079-4e36-a941-1d0c68b151fd",
+      "DisplayName": "PGSQLForm",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
